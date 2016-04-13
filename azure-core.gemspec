@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.email       = 'azureruby@microsoft.com'
   s.description = 'Microsoft Azure Client Core Library for Ruby SDK'
   s.summary     = 'Core library to be consumed by Ruby SDK gems'
-  s.homepage    = 'http://github.com/azure/azure-sdk-for-ruby-UPDATE THIS'
+  s.homepage    = 'http://github.com/Azure/azure-ruby-asm-core'
   s.license     = 'Apache License, Version 2.0'
   s.files       = `git ls-files`.split("\n").reject { |f|  f.start_with?("test/unit") }
 

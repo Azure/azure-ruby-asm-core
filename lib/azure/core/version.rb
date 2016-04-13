@@ -25,7 +25,7 @@ module Azure
 
         # @return [String]
         def to_s
-          [MAJOR, MINOR, UPDATE, PRE].compact.join('.')
+          [MAJOR, MINOR, UPDATE].join('.') + (PRE.nil? ? '' : "-#{PRE}")
         end
       end
     end
