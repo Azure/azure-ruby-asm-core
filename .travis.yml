@@ -11,3 +11,11 @@ before_install: gem install bundler -v 1.11.2
 script:
 - bundle install && bundle exec rake test:unit
 
++deploy:
++  provider: rubygems
++  api_key:
++    secure: BuXJGlLOdB8pq6vOCNNJvkvHXb8HDNrcXDbryBeHhsvXbNMTxVz/8UXWYkxhSAFcqA2kNi8kNGAPMrOhi9EBAf4N34EcGyHnR2VUl25QhU2bj5v6+5/8b6/kVv0GZ80TQzyexuRDikDyBReRlKJI5KUNMz7l520j79/Z0Yndb2wIdkM/ZPtos/nHBWOUr/U1iSJGZ9iNSCrVEECcPYR2UdoxIzTQZWlU6yRzz+shWwcPX7QjZ6XPvrha/PQWTAvWDztEoiBu8rtFz4136AmB51J9FOtWZl7UMTZD6a7UT5sUWiL5nEI4/XEXxTBHL92rQj7aaxXCJ8GpdvEk3DUUvwwXV5w7/LwUISdvZzQ6cIcLCYDxbWKa1QWdpTZuxcZAMQHKgty02VQR0Gdv6A1hLYm7hSNCHqt9z1ZxKwcq5x09jDgjXM0D5NwcPWpePzYn4wRiw3VdeYsfb62MVZ8GURdmAVEoV71fM5IUp3QOKrtBm6FRMTUolT5kN1vizCZv4+C+SiPWy2Vf2hmtU8Km0W9EoAuz67/fEIKiCdpStoIvR72swdC2e1ailftrgn4nZwFakay6mkr2tj6DDdr1U68U3eDTCESz65h2lfaQnxmLXG9R/8fkD3L0vM84N7Ob06TrFCWWppsvDj8QtKFsZ1rCkrnIxp/0VEMO6bJzVWg=
++  gem: azure-core
++  on:
++    tags: true
++    repo: Azure/azure-ruby-asm-core
