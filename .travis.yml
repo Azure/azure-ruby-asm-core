@@ -1,21 +1,19 @@
----
 sudo: false
 language: ruby
 rvm:
-  - 2.0.0
-  - 2.1.5
-  - 2.2.0
-  - 2.3.0
+- 2.0.0
+- 2.1.5
+- 2.2.0
+- 2.3.0
 before_install: gem install bundler -v 1.11.2
-
 script:
 - bundle install && bundle exec rake test:unit
-
-+deploy:
-+  provider: rubygems
-+  api_key:
-+    secure: BuXJGlLOdB8pq6vOCNNJvkvHXb8HDNrcXDbryBeHhsvXbNMTxVz/8UXWYkxhSAFcqA2kNi8kNGAPMrOhi9EBAf4N34EcGyHnR2VUl25QhU2bj5v6+5/8b6/kVv0GZ80TQzyexuRDikDyBReRlKJI5KUNMz7l520j79/Z0Yndb2wIdkM/ZPtos/nHBWOUr/U1iSJGZ9iNSCrVEECcPYR2UdoxIzTQZWlU6yRzz+shWwcPX7QjZ6XPvrha/PQWTAvWDztEoiBu8rtFz4136AmB51J9FOtWZl7UMTZD6a7UT5sUWiL5nEI4/XEXxTBHL92rQj7aaxXCJ8GpdvEk3DUUvwwXV5w7/LwUISdvZzQ6cIcLCYDxbWKa1QWdpTZuxcZAMQHKgty02VQR0Gdv6A1hLYm7hSNCHqt9z1ZxKwcq5x09jDgjXM0D5NwcPWpePzYn4wRiw3VdeYsfb62MVZ8GURdmAVEoV71fM5IUp3QOKrtBm6FRMTUolT5kN1vizCZv4+C+SiPWy2Vf2hmtU8Km0W9EoAuz67/fEIKiCdpStoIvR72swdC2e1ailftrgn4nZwFakay6mkr2tj6DDdr1U68U3eDTCESz65h2lfaQnxmLXG9R/8fkD3L0vM84N7Ob06TrFCWWppsvDj8QtKFsZ1rCkrnIxp/0VEMO6bJzVWg=
-+  gem: azure-core
-+  on:
-+    tags: true
-+    repo: Azure/azure-ruby-asm-core
+deploy:
+  provider: rubygems
+  api_key:
+    secure: EN/hvsyyZq4bOxJgJXVP8AttRsn9ajYrtsg47bVcPHtSXP52mT1r800FC50l1V1MoeNPrgjO8WjVY37rR/FerDsdt0rujakfseKOpCeosAX8hbJ2zVcyOnU16TmkNUAqKKprHkvw/8dnNEYmeyUo+VZmizxVhieur8yitKWiP08Ab1ehA8sDfcGsusnE/Las7fyiiCqMfFQJsJWJimIXNYF6pGZs+6l1YE2sH5S4wKLf09+jhP4WZ6nXcYlyUViLqieMx3US1a9jVV534QSIVYk7Z8PdP4eJm4P46UJ1YPc85DceLAZh2dno5l+Eyk16UYBgPichWEqQf3+0SaNKxNDkNYmXPkxNbajIKFLAsTs7CBwhwK3CxfgDok2P3jcB9iJg3ZlWFD6fMxr1Tca1cEkLpxj8S7peB4St0AwVeaEXfUHIDHb706PbOOoy5BOuK+aDotz0/sHQTOHSAPD4IhZ3+GKCkV4NOV2fxKTWXYK1NSx76jyBW3gnSsy9OWKhKxEXaVLB3J1i5dKUw1l4YBJuRATw2GbimMqQf0EpXukXE/fKugU4+EQUZwoIe85GrjaJrU/LXMpp8lBoh5dPZOxtEXGp6cJWcl239FUVSY17Wf/H8cTpahhNR+PNHUyavC2syPOqxrzNKmfNN3bWFm6iJkYCNI2bFxpUB/Ky+Vc=
+  gemspec: azure-core.gemspec
+  gem: azure-core
+  on:
+    tags: true
+    repo: Azure/azure-ruby-asm-core
