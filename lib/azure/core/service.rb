@@ -37,8 +37,7 @@ module Azure
       end
 
       def generate_uri(path='', query={})
-        enconded_file_uri_string = URI.encode(File.join(host, path))
-        uri = URI.parse(enconded_file_uri_string)
+        uri = URI.parse(File.join(host, path))
         uri.query = URI.encode_www_form(query) unless query == nil or query.empty?
         uri
       end
