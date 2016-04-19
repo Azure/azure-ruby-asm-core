@@ -1,5 +1,7 @@
 # Azure::Core
 
+[![Build Status](https://travis-ci.org/Azure/azure-ruby-asm-core.png?branch=master)](https://travis-ci.org/Azure/azure-ruby-asm-core) 
+
 This project provides a Ruby package with core functionality consumed by Azure SDK gems.
 
 ## Installation
