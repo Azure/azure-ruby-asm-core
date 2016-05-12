@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
+require "azure/core/http/retry_policy"
 require "pathname"
 
 module Azure
@@ -35,6 +36,20 @@ module Azure
 
     def Fixtures.xml?(fixture)
       file?("#{fixture}.xml")
+    end
+    
+    class FixtureRetryPolicy < Azure::Core::Http::RetryPolicy
+      def initialize
+        super &:should_retry?
+      end
+
+      def should_retry?(response, retry_data)
+        if retry_data[:error].inspect.include?('Error: Retry')
+          true
+        else
+          false
+        end
+      end
     end
 
   end
