@@ -20,4 +20,14 @@ describe Azure::Core::Http::RetryPolicy do
     retry_policy = Azure::Core::Http::RetryPolicy.new do |a,b| true end
     retry_policy.should_retry?(nil, nil).must_equal true
   end
+  
+  it 'uses retry policy as retry logic with expected error' do
+    retry_policy = Azure::Core::FixtureRetryPolicy.new
+    retry_policy.should_retry?(nil, {:error => 'Error: Retry'}).must_equal true
+  end
+
+  it 'uses retry policy as retry logic with unexpect error' do
+    retry_policy = Azure::Core::FixtureRetryPolicy.new
+    retry_policy.should_retry?(nil, {:error => 'Error: No retry'}).must_equal false
+  end
 end

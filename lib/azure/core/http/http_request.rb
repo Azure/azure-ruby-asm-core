@@ -19,6 +19,7 @@ require 'time'
 
 require 'azure/core/version'
 require 'azure/core/http/http_response'
+require 'azure/core/http/retry_policy'
 require 'azure/core/default'
 require 'azure/http_response_helper'
 
@@ -46,6 +47,9 @@ module Azure
         # Azure client which contains configuration context and http agents
         # @return [Azure::Client]
         attr_accessor :client
+        
+        # The http filter
+        attr_accessor :has_retry_filter
 
         # Public: Create the HttpRequest
         #
@@ -92,19 +96,20 @@ module Azure
         def with_filter(filter=nil, &block)
           filter = filter || block
           if filter
-            old_impl = self._method(:call)
+            @has_retry_filter = filter.is_a? Azure::Core::Http::RetryPolicy
+            original_call = self._method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
-            new_impl = Proc.new do
-              filter.call(self, old_impl)
+            filter_call = Proc.new do
+              filter.call(self, original_call)
             end
             k = class << self;
               self;
             end
             if k.method_defined? :define_singleton_method
-              self.define_singleton_method(:call, new_impl)
+              self.define_singleton_method(:call, filter_call)
             else
-              k.send(:define_method, :call, new_impl)
+              k.send(:define_method, :call, filter_call)
             end
           end
         end
@@ -149,7 +154,7 @@ module Azure
 
           response = HttpResponse.new(res)
           response.uri = uri
-          raise response.error unless response.success?
+          raise response.error if !response.success? && !@has_retry_filter
           response
         end
 
