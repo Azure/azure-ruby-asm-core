@@ -21,6 +21,14 @@ module Azure
       # Public: Class for handling all HTTP response errors
       class HTTPError < Azure::Core::Error
 
+        # Public: Detail of the response
+        #
+        # Returns an Azure::Core::Http::HttpResponse object
+        attr :http_response
+
+        # Public: The request URI
+        #
+        # Returns a String
         attr :uri
 
         # Public: The HTTP status code of this error
@@ -44,6 +52,16 @@ module Azure
         #
         # Returns a String
         attr :detail
+
+        # Public: The header name whose value is invalid
+        #
+        # Returns a String
+        attr :header
+
+        # Public: The invalid header value
+        #
+        # Returns a String
+        attr :header_value
 
         # Public: Initialize an error
         #
@@ -71,6 +89,12 @@ module Azure
             @description = document.css('message').first.text if document.css('message').any?
             @description = document.css('Message').first.text if document.css('Message').any?
 
+            @header = document.css('headername').first.text if document.css('headername').any?
+            @header = document.css('HeaderName').first.text if document.css('HeaderName').any?
+
+            @header_value = document.css('headervalue').first.text if document.css('headervalue').any?
+            @header_value = document.css('HeaderValue').first.text if document.css('HeaderValue').any?
+
             # service bus uses detail instead of message
             @detail = document.css('detail').first.text if document.css('detail').any?
             @detail = document.css('Detail').first.text if document.css('Detail').any?
@@ -80,6 +104,12 @@ module Azure
               @description = "#{@http_response.body.strip}"
             end
           end
+        end
+
+        def inspect
+          string = "#<#{self.class.name}:#{self.object_id} "
+          fields = self.instance_variables.map{|field| "#{field}: #{self.send(field.to_s.delete("@")).inspect}"}
+          string << fields.join(", ") << ">"
         end
       end
     end
