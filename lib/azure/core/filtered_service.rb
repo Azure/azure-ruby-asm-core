@@ -32,7 +32,7 @@ module Azure
 
       def call(method, uri, body=nil, headers=nil)
         super(method, uri, body, headers) do |request|
-          filters.each { |filter| request.with_filter filter } if filters
+          filters.reverse.each { |filter| request.with_filter filter } if filters
         end
       end
 
