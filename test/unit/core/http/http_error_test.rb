@@ -58,4 +58,18 @@ describe Azure::Core::Http::HTTPError do
       subject.description.must_equal 'Invalid request'
     end
   end
+
+  describe 'with invalid headers' do
+    let :http_response do
+      stub(body: Azure::Core::Fixtures[:http_invalid_header], status_code: 400, uri: 'http://dummy.uri', headers: {})
+    end
+
+    it 'sets the invalid header in the error details' do
+      subject.status_code.must_equal 400
+      subject.type.must_equal 'InvalidHeaderValue'
+      subject.description.must_include 'The value for one of the HTTP headers is not in the correct format'
+      subject.header.must_equal 'Range'
+      subject.header_value.must_equal 'bytes=0-512'
+    end
+  end
 end
