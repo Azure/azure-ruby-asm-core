@@ -79,7 +79,7 @@ module Azure
             @body = body
             @headers = headers
             @headers.each { |k,v|
-              @headers[k] = [v] unless v.respond_to? first
+              @headers[k] = [v] unless v.respond_to? 'first'
             }
           end
           attr_accessor :status
