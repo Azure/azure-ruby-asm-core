@@ -1,4 +1,7 @@
-# 2016.8.19 - azure-core gem @version 0.1.3
+# 2016.8.19 - azure-core gem @version 0.1.4
+* Reverted the breaking changes [#23](https://github.com/Azure/azure-ruby-asm-core/pull/23) 
+
+# 2016.8.18 - azure-core gem @version 0.1.3
 * Set default open timeout for the request [#16](https://github.com/Azure/azure-ruby-asm-core/issues/16)
 * Fixed the issue that debug filter cannot display the right request information when the signer filter is added [#15](https://github.com/Azure/azure-ruby-asm-core/issues/15)
 * Fixed the unrecognized method in the MockHttpResponse class [#18](https://github.com/Azure/azure-ruby-asm-core/pull/18)
