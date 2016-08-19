@@ -32,7 +32,7 @@ module Azure
             raise ArgumentError, 'Signing key must be provided'
           end
 
-          @access_key = access_key
+          @access_key = Base64.strict_decode64(access_key)
         end
 
         # Generate an HMAC signature.
@@ -41,7 +41,7 @@ module Azure
         #
         # @return [String] a Base64 String signed with HMAC.
         def sign(body)
-          signed = OpenSSL::HMAC.digest(OpenSSL::Digest.new('sha256'), access_key, body)
+          signed = OpenSSL::HMAC.digest('sha256', access_key, body)
           Base64.strict_encode64(signed)
         end
 

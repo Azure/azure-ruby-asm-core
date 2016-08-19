@@ -24,9 +24,11 @@ module Azure
 
         # Initialize the Signer.
         #
-        # @param account_name [String] The account name.
-        # @param access_key   [String] The access_key encoded in Base64.
-        def initialize(account_name, access_key)
+        # @param account_name [String] The account name. Defaults to the one in the
+        #                global configuration.
+        # @param access_key   [String] The access_key encoded in Base64. Defaults to the
+        #                one in the global configuration.
+        def initialize(account_name=Azure.storage_account_name, access_key=Azure.storage_access_key)
           @account_name = account_name
           super(access_key)
         end

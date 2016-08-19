@@ -24,7 +24,7 @@ module Azure
       # Create a new instance of the SignedService
       #
       # @param signer         [Azure::Core::Auth::Signer]. An implementation of Signer used for signing requests. (optional, Default=Azure::Core::Auth::SharedKey.new)
-      # @param account_name   [String] The account name (optional, Default=Azure.storage_account_name)
+      # @param account_name   [String] The account name (optional, Default=Azure.config.storage_account_name)
       # @param options        [Hash] options
       def initialize(signer=nil, account_name=nil, options={})
         super('', options)
