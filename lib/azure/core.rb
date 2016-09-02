@@ -27,6 +27,12 @@ module Azure
     autoload :FilteredService,                'azure/core/filtered_service'
     autoload :SignedService,                  'azure/core/signed_service'
     autoload :Default,                        'azure/core/default'
+    module Auth
+      autoload :SharedKey,                    'azure/core/auth/shared_key'
+      autoload :Signer,                       'azure/core/auth/signer'
+      autoload :Authorizer,                   'azure/core/auth/authorizer'
+      autoload :SharedKeyLite,                'azure/core/auth/shared_key_lite'
+    end
   end
 
 end
