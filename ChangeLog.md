@@ -1,3 +1,6 @@
+# 2016.9.21 - azure-core gem @version 0.1.5
+* Adding autoload for auth files, to avoid having to require these files from dependent gems [#25](https://github.com/Azure/azure-ruby-asm-core/pull/25)
+
 # 2016.8.19 - azure-core gem @version 0.1.4
 * Reverted the breaking changes [#23](https://github.com/Azure/azure-ruby-asm-core/pull/23) 
 
