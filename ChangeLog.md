@@ -1,3 +1,6 @@
+# 2016.10.31 - azure-core gem @version 0.1.6
+* Fixed the issue where it throws the HTTP error even there is a retry filter.
+
 # 2016.9.21 - azure-core gem @version 0.1.5
 * Adding autoload for auth files, to avoid having to require these files from dependent gems [#25](https://github.com/Azure/azure-ruby-asm-core/pull/25)
 

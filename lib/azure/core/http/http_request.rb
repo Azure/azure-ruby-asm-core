@@ -96,7 +96,7 @@ module Azure
         def with_filter(filter=nil, &block)
           filter = filter || block
           if filter
-            @has_retry_filter = filter.is_a? Azure::Core::Http::RetryPolicy
+            @has_retry_filter ||= filter.is_a?(Azure::Core::Http::RetryPolicy)
             original_call = self._method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
