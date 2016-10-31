@@ -12,22 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #--------------------------------------------------------------------------
+require 'test_helper'
+require 'azure/core'
+require "azure/core/http/debug_filter"
+require "azure/core/http/retry_policy"
 
-module Azure
-  module Core
-    class Version
-      MAJOR = 0 unless defined? MAJOR
-      MINOR = 1 unless defined? MINOR
-      UPDATE = 6 unless defined? UPDATE
-      PRE = nil unless defined? PRE
+describe 'Azure core service' do
+  subject do
+    Azure::Core::FilteredService.new
+  end
 
-      class << self
+  it 'works with default' do
+    subject.filters.count.must_equal 0
+  end
 
-        # @return [String]
-        def to_s
-          [MAJOR, MINOR, UPDATE].join('.') + (PRE.nil? ? '' : "-#{PRE}")
-        end
-      end
-    end
+  it 'works with a debug filter' do
+    service = Azure::Core::FilteredService.new
+    service.with_filter Azure::Core::Http::DebugFilter.new
+    service.filters.count.must_equal 1
+  end
+
+  it 'works with retry policy filter' do
+    service = Azure::Core::FilteredService.new
+    service.with_filter Azure::Core::Http::DebugFilter.new
+    service.with_filter Azure::Core::Http::RetryPolicy.new
+    service.filters.count.must_equal 2
   end
 end
