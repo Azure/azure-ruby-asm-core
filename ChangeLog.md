@@ -1,4 +1,4 @@
-# 2016.10.31 - azure-core gem @version 0.1.6
+# 2016.11.23 - azure-core gem @version 0.1.6
 * Fixed the issue where it throws the HTTP error even there is a retry filter.
 
 # 2016.9.21 - azure-core gem @version 0.1.5
