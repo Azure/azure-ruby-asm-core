@@ -1,3 +1,6 @@
+# 2017.01.25 - azure-core gem @version 0.1.7
+* Making a new release to fix the checksum issue with rubygems. No changes in this release.
+
 # 2016.11.23 - azure-core gem @version 0.1.6
 * Fixed the issue where it throws the HTTP error even there is a retry filter.
 
