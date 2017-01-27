@@ -94,8 +94,8 @@ module Azure
         # @return [String] a string with the canonicalized headers.
         def canonicalized_headers(headers)
           headers = headers.map { |k,v| [k.to_s.downcase, v] }
-          headers.select! { |k,v| k =~ /^x-ms-/ }
-          headers.sort_by! { |(k,v)| k }
+          headers.select! { |k,_| k =~ /^x-ms-/ }
+          headers.sort_by! { |(k,_)| k }
           headers.map! { |k,v| '%s:%s' % [k, v] }
           headers.map! { |h| h.gsub(/\s+/, ' ') }.join("\n")
         end
@@ -108,7 +108,7 @@ module Azure
         def canonicalized_resource(uri)
           resource = '/' + account_name + (uri.path.empty? ? '/' : uri.path)
           params = CGI.parse(uri.query.to_s).map { |k,v| [k.downcase, v] }
-          params.sort_by! { |k,v| k }
+          params.sort_by! { |k,_| k }
           params.map! { |k,v| '%s:%s' % [k, v.map(&:strip).sort.join(',')] }
           [resource, *params].join("\n")
         end
