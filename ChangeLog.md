@@ -1,3 +1,7 @@
+# 2017.04.17 - azure-core gem @version 0.1.8
+* Fixed rubocop scanned out issue. [#31](https://github.com/Azure/azure-ruby-asm-core/pull/31)
+* Code changes to install nokogiri based on the ruby version. [#35](https://github.com/Azure/azure-ruby-asm-core/pull/35)
+
 # 2017.01.25 - azure-core gem @version 0.1.7
 * Making a new release to fix the checksum issue with rubygems. No changes in this release.
 
