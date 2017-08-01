@@ -26,17 +26,12 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://github.com/Azure/azure-ruby-asm-core'
   s.license     = 'Apache License, Version 2.0'
   s.files       = `git ls-files`.split("\n").reject { |f|  f.start_with?("test/unit") }
+  s.extensions  = 'ext/mkrf_conf.rb'
 
   s.required_ruby_version = '>= 1.9.3'
 
   s.add_runtime_dependency('faraday',                 '~> 0.9')
   s.add_runtime_dependency('faraday_middleware',      '~> 0.10')
-  if RUBY_VERSION < "2.1.0"
-    s.add_runtime_dependency('nokogiri',              '~> 1.6.0')
-  else
-    s.add_runtime_dependency('nokogiri',              '~> 1.7')
-  end
-
   s.add_development_dependency('dotenv',              '~> 2.0')
   s.add_development_dependency('minitest',            '~> 5')
   s.add_development_dependency('minitest-reporters',  '~> 1')
