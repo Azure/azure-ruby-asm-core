@@ -155,6 +155,16 @@ module Azure
             if IO === body
               headers['Content-Length'] = body.size.to_s
               headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest unless headers['Content-MD5']
+            elsif StringIO === body
+              headers['Content-Length'] = body.size.to_s
+              unless headers['Content-MD5']
+                headers['Content-MD5'] = Digest::MD5.new.tap do |checksum|
+                                           while chunk = body.read(5242880)
+                                             checksum << chunk
+                                           end
+                                           body.rewind
+                                         end.base64digest
+              end
             else
               headers['Content-Length'] = body.bytesize.to_s
               headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body)) unless headers['Content-MD5']
@@ -163,7 +173,6 @@ module Azure
             headers['Content-Length'] = '0'
           end
         end
-
       end
     end
   end

@@ -62,20 +62,60 @@ describe Azure::Core::Http::HttpRequest do
   end
 
   describe ' when passed a body ' do
-    subject do
-      Azure::Core::Http::HttpRequest.new(:post, uri, body: '<body/>')
+    describe " of type IO" do
+      subject do
+        file = File.open(File.expand_path("../../../../fixtures/files/test.png", __FILE__))
+        Azure::Core::Http::HttpRequest.new(:post, uri, body: file)
+      end
+
+      it 'sets the default Content-Type header' do
+        subject.headers['Content-Type'].must_equal 'application/atom+xml; charset=utf-8'
+      end
+
+      it 'sets the Content-Length header' do
+        subject.headers['Content-Length'].must_equal '4054'
+      end
+
+      it 'sets the Content-MD5 header to a Base64 encoded representation of the MD5 hash of the body' do
+        subject.headers['Content-MD5'].must_equal 'nxTCAVCgA9fOTeV8KY8Pug=='
+      end
     end
 
-    it 'sets the default Content-Type header' do
-      subject.headers['Content-Type'].must_equal 'application/atom+xml; charset=utf-8'
+    describe ' of type StringIO' do
+      subject do
+        Azure::Core::Http::HttpRequest.new(:post, uri, body: StringIO.new('<body/>'))
+      end
+
+      it 'sets the default Content-Type header' do
+        subject.headers['Content-Type'].must_equal 'application/atom+xml; charset=utf-8'
+      end
+
+      it 'sets the Content-Length header' do
+        subject.headers['Content-Length'].must_equal '7'
+      end
+
+      it 'sets the Content-MD5 header to a Base64 encoded representation of the MD5 hash of the body' do
+        subject.headers['Content-MD5'].must_equal 'PNeJy7qyzV4XUoBBHkVu0g=='
+      end
     end
 
-    it 'sets the Content-Length header' do
-      subject.headers['Content-Length'].must_equal '7'
-    end
 
-    it 'sets the Content-MD5 header to a Base64 encoded representation of the MD5 hash of the body' do
-      subject.headers['Content-MD5'].must_equal 'PNeJy7qyzV4XUoBBHkVu0g=='
+    describe ' of type String' do
+      subject do
+        Azure::Core::Http::HttpRequest.new(:post, uri, body: '<body/>')
+      end
+
+      it 'sets the default Content-Type header' do
+        subject.headers['Content-Type'].must_equal 'application/atom+xml; charset=utf-8'
+      end
+
+      it 'sets the Content-Length header' do
+        subject.headers['Content-Length'].must_equal '7'
+      end
+
+      it 'sets the Content-MD5 header to a Base64 encoded representation of the MD5 hash of the body' do
+        subject.headers['Content-MD5'].must_equal 'PNeJy7qyzV4XUoBBHkVu0g=='
+      end
     end
   end
 
