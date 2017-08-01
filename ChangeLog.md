@@ -1,3 +1,6 @@
+# 2017.08.01 - azure-core gem @version 0.1.9
+* Added support for StringIO inside body headers. [#39](https://github.com/Azure/azure-ruby-asm-core/pull/39)
+
 # 2017.04.17 - azure-core gem @version 0.1.8
 * Fixed rubocop scanned out issue. [#31](https://github.com/Azure/azure-ruby-asm-core/pull/31)
 * Code changes to install nokogiri based on the ruby version. [#35](https://github.com/Azure/azure-ruby-asm-core/pull/35)
