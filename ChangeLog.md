@@ -1,3 +1,6 @@
+# 2017.08.10 - azure-core gem @version 0.1.10
+* Changed 'nokogiri' to dev dependency and added post-logic for Gem installation. [#41](https://github.com/Azure/azure-ruby-asm-core/pull/41)
+
 # 2017.08.01 - azure-core gem @version 0.1.9
 * Added support for StringIO inside body headers. [#39](https://github.com/Azure/azure-ruby-asm-core/pull/39)
 
