@@ -20,6 +20,9 @@ Or install it yourself as:
 
     $ gem install azure-core
 
+### Notice
+For ruby version >= 1.9.3 && < 2.2.0, please install compatible Nokogiri(version >= 1.6.8), otherwise the installation using old version of bundler or all version of rubygems will report failure.
+
 ## Usage
 ```ruby
  require 'azure/core'
