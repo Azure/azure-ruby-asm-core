@@ -1,3 +1,6 @@
+# 2017.08.18 - azure-core gem @version 0.1.11
+* Changed 'nokogiri' to runtime dependency with version >= 1.6, and added documentation to resolve dependency issue to Readme for users with Ruby version lower than 2.2.0.
+
 # 2017.08.10 - azure-core gem @version 0.1.10
 * Changed 'nokogiri' to dev dependency and added post-logic for Gem installation. [#41](https://github.com/Azure/azure-ruby-asm-core/pull/41)
 
