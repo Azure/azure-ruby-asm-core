@@ -167,6 +167,7 @@ describe Azure::Core::Http::HttpRequest do
         res.expects(:success?).returns(false).at_least_once
         res.expects(:status).returns(401).at_least_once
         res.expects(:body).returns(body).at_least_once
+        res.expects(:headers).returns({}).at_least_once
         res
       end
 
