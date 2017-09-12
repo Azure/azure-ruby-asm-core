@@ -121,7 +121,7 @@ module Azure
             def_headers['x-ms-date'] = current_time
             def_headers['x-ms-version'] = '2014-02-14'
             def_headers['DataServiceVersion'] = '1.0;NetFx'
-            def_headers['MaxDataServiceVersion'] = '2.0;NetFx'
+            def_headers['MaxDataServiceVersion'] = '3.0;NetFx'
             def_headers['Content-Type'] = 'application/atom+xml; charset=utf-8'
           end
         end

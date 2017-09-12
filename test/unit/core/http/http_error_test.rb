@@ -17,7 +17,7 @@ require 'azure/core/http/http_error'
 
 describe Azure::Core::Http::HTTPError do
   let :http_response do
-    stub(body: Azure::Core::Fixtures[:http_error], status_code: 409, uri: 'http://dummy.uri', headers: {})
+    stub(body: Azure::Core::Fixtures[:http_error], status_code: 409, uri: 'http://dummy.uri', headers: { 'Content-Type' => 'application/atom+xml' })
   end
 
   subject do
@@ -61,7 +61,7 @@ describe Azure::Core::Http::HTTPError do
 
   describe 'with invalid headers' do
     let :http_response do
-      stub(body: Azure::Core::Fixtures[:http_invalid_header], status_code: 400, uri: 'http://dummy.uri', headers: {})
+      stub(body: Azure::Core::Fixtures[:http_invalid_header], status_code: 400, uri: 'http://dummy.uri', headers: { 'Content-Type' => 'application/atom+xml'})
     end
 
     it 'sets the invalid header in the error details' do
@@ -70,6 +70,32 @@ describe Azure::Core::Http::HTTPError do
       subject.description.must_include 'The value for one of the HTTP headers is not in the correct format'
       subject.header.must_equal 'Range'
       subject.header_value.must_equal 'bytes=0-512'
+    end
+  end
+
+  describe 'with JSON payload' do
+    let :http_response do
+      body = "{\"odata.error\":{\"code\":\"ErrorCode\",\"message\":{\"lang\":\"en-US\",\"value\":\"ErrorDescription\"}}}"
+      stub(body: body, status_code: 400, uri: 'http://dummy.uri', headers: { 'Content-Type' => 'application/json' })
+    end
+
+    it 'parse error response with JSON payload' do
+      subject.status_code.must_equal 400
+      subject.type.must_equal 'ErrorCode'
+      subject.description.must_include 'ErrorDescription'
+    end
+  end
+
+  describe 'with unknown payload' do
+    let :http_response do
+      body = 'Unknown Payload Format with Unknown Error Description'
+      stub(body: body, status_code: 400, uri: 'http://dummy.uri', headers: {})
+    end
+
+    it 'parse error response with JSON payload' do
+      subject.status_code.must_equal 400
+      subject.type.must_equal 'Unknown'
+      subject.description.must_include 'Error Description'
     end
   end
 end

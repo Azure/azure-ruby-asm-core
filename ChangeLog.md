@@ -1,3 +1,7 @@
+# 2017.08.31 - azure-core gem @version 0.1.12
+* Changed default value of header `MaxDataServiceVersion` to `3.0;NetFx` now that the service is available.
+* `Azure::Core::Http::HTTPError` now can also parse JSON format response body for error type and description.
+
 # 2017.08.18 - azure-core gem @version 0.1.11
 * Changed 'nokogiri' to runtime dependency with version >= 1.6, and added documentation to resolve dependency issue to Readme for users with Ruby version lower than 2.2.0.
 

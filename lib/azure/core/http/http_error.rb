@@ -14,6 +14,7 @@
 #--------------------------------------------------------------------------
 require 'azure/core/error'
 require 'nokogiri'
+require 'json'
 
 module Azure
   module Core
@@ -80,29 +81,44 @@ module Azure
         #
         # Returns nothing
         def parse_response
-          if @http_response.body && @http_response.body.include?('<')
-
-            document = Nokogiri.Slop(@http_response.body)
-
-            @type = document.css('code').first.text if document.css('code').any?
-            @type = document.css('Code').first.text if document.css('Code').any?
-            @description = document.css('message').first.text if document.css('message').any?
-            @description = document.css('Message').first.text if document.css('Message').any?
-
-            @header = document.css('headername').first.text if document.css('headername').any?
-            @header = document.css('HeaderName').first.text if document.css('HeaderName').any?
-
-            @header_value = document.css('headervalue').first.text if document.css('headervalue').any?
-            @header_value = document.css('HeaderValue').first.text if document.css('HeaderValue').any?
-
-            # service bus uses detail instead of message
-            @detail = document.css('detail').first.text if document.css('detail').any?
-            @detail = document.css('Detail').first.text if document.css('Detail').any?
-          else
-            @type = 'Unknown'
-            if @http_response.body
-              @description = "#{@http_response.body.strip}"
+          if @http_response.body && @http_response.respond_to?(:headers) && @http_response.headers['Content-Type']
+            if @http_response.headers['Content-Type'].include?('xml')
+              parse_xml_response
+            elsif @http_response.headers['Content-Type'].include?('json')
+              parse_json_response
             end
+          else
+            parse_unknown_response
+          end
+        end
+
+        def parse_xml_response
+          document = Nokogiri.Slop(@http_response.body)
+
+          @type = document.css('code').first.text if document.css('code').any?
+          @type = document.css('Code').first.text if document.css('Code').any?
+          @description = document.css('message').first.text if document.css('message').any?
+          @description = document.css('Message').first.text if document.css('Message').any?
+          @header = document.css('headername').first.text if document.css('headername').any?
+          @header = document.css('HeaderName').first.text if document.css('HeaderName').any?
+          @header_value = document.css('headervalue').first.text if document.css('headervalue').any?
+          @header_value = document.css('HeaderValue').first.text if document.css('HeaderValue').any?
+
+          # service bus uses detail instead of message
+          @detail = document.css('detail').first.text if document.css('detail').any?
+          @detail = document.css('Detail').first.text if document.css('Detail').any?
+        end
+
+        def parse_json_response
+          odata_error = JSON.parse(@http_response.body)['odata.error']
+          @type = odata_error['code']
+          @description = odata_error['message']['value']
+        end
+
+        def parse_unknown_response
+          @type = 'Unknown'
+          if @http_response.body
+            @description = "#{@http_response.body.strip}"
           end
         end
 
