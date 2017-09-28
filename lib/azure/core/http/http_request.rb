@@ -151,27 +151,33 @@ module Azure
         private
 
         def apply_body_headers
-          if body
-            if IO === body
-              headers['Content-Length'] = body.size.to_s
-              headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest unless headers['Content-MD5']
-            elsif StringIO === body
-              headers['Content-Length'] = body.size.to_s
-              unless headers['Content-MD5']
-                headers['Content-MD5'] = Digest::MD5.new.tap do |checksum|
-                                           while chunk = body.read(5242880)
-                                             checksum << chunk
-                                           end
-                                           body.rewind
-                                         end.base64digest
-              end
-            else
-              headers['Content-Length'] = body.bytesize.to_s
-              headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body)) unless headers['Content-MD5']
-            end
-          else
-            headers['Content-Length'] = '0'
+          return headers['Content-Length'] = '0' unless body
+
+          return apply_io_headers        if IO === body
+          return apply_string_io_headers if StringIO === body
+          return apply_miscellaneous_headers
+        end
+
+        def apply_io_headers
+          headers['Content-Length'] = body.size.to_s
+          headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest unless headers['Content-MD5']
+        end
+
+        def apply_string_io_headers
+          headers['Content-Length'] = body.size.to_s
+          unless headers['Content-MD5']
+            headers['Content-MD5'] = Digest::MD5.new.tap do |checksum|
+                                       while chunk = body.read(5242880)
+                                         checksum << chunk
+                                       end
+                                       body.rewind
+                                     end.base64digest
           end
+        end
+
+        def apply_miscellaneous_headers
+          headers['Content-Length'] = body.bytesize.to_s
+          headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body)) unless headers['Content-MD5']
         end
       end
     end
