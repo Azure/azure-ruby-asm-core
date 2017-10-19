@@ -159,7 +159,10 @@ module Azure
         end
 
         def apply_io_headers
-          headers['Content-Length'] = body.size.to_s
+          headers['Content-Length'] = body.size.to_s if body.respond_to?('size')
+          if headers['Content-Length'].nil?
+            raise ArgumentError, '\'Content-Length\' must be defined if size cannot be obtained from body IO.'
+          end
           headers['Content-MD5'] = Digest::MD5.file(body.path).base64digest unless headers['Content-MD5']
         end
 
