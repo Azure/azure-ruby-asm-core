@@ -48,5 +48,18 @@ module Azure
       end
     end
 
+    class NewUriRetryPolicy < Azure::Core::Http::RetryPolicy
+      def initialize
+        @count = 1
+        super &:should_retry?
+      end
+
+      def should_retry?(response, retry_data)
+        retry_data[:uri] = URI.parse "http://bar.com"
+        @count = @count - 1
+        @count >= 0
+      end
+    end
+
   end
 end

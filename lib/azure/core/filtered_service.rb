@@ -30,9 +30,9 @@ module Azure
 
       attr_accessor :filters
 
-      def call(method, uri, body=nil, headers=nil)
+      def call(method, uri, body=nil, headers=nil, options={})
         super(method, uri, body, headers) do |request|
-          filters.reverse.each { |filter| request.with_filter filter } if filters
+          filters.reverse.each { |filter| request.with_filter filter, options } if filters
         end
       end
 

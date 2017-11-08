@@ -30,4 +30,24 @@ describe Azure::Core::Http::RetryPolicy do
     retry_policy = Azure::Core::FixtureRetryPolicy.new
     retry_policy.should_retry?(nil, {:error => 'Error: No retry'}).must_equal false
   end
+
+  describe "NewUriRetryPolicy retries with a new URL" do
+    subject { Azure::Core::NewUriRetryPolicy.new }
+
+    let(:verb) { :put }
+    let(:uri) { URI.parse "http://foo.com" }
+    let(:new_uri) { URI.parse "http://bar.com" }
+    let(:request) { Azure::Core::Http::HttpRequest.new verb, uri, {} }
+    let(:response) { Azure::Core::Http::HttpResponse.new nil, uri }
+
+    before {
+      request.stubs(:call).returns(response)
+      response.stubs(:success?).returns(true)
+    }
+
+    it "retries with a new URL" do
+      subject.call request, request
+      request.uri.must_equal new_uri
+    end
+  end
 end

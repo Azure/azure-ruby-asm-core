@@ -37,8 +37,8 @@ module Azure
       attr_accessor :account_name
       attr_accessor :signer
 
-      def call(method, uri, body=nil, headers=nil)
-        super(method, uri, body, headers)
+      def call(method, uri, body=nil, headers=nil, options={})
+        super(method, uri, body, headers, options)
       end
     end
   end

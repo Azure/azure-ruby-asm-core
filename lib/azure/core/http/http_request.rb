@@ -80,6 +80,9 @@ module Azure
         #          returns a HttpResponse eg. HttpFilter, Proc,
         #          lambda, etc. (optional)
         #
+        # options - The options that are used when call Azure::Core::FilteredService.call.
+        #           It can be used by retry policies to determine changes in the retry.
+        #
         # &block - An inline block may be used instead of a filter
         #
         #          example:
@@ -93,10 +96,13 @@ module Azure
         # The code block provided must call _next or the filter pipeline
         # will not complete and the HTTP request will never execute
         #
-        def with_filter(filter=nil, &block)
+        def with_filter(filter=nil, options={}, &block)
           filter = filter || block
           if filter
-            @has_retry_filter ||= filter.is_a?(Azure::Core::Http::RetryPolicy)
+            is_retry_policy = filter.is_a?(Azure::Core::Http::RetryPolicy)
+            filter.retry_data[:request_options] = options if is_retry_policy
+            @has_retry_filter ||= is_retry_policy
+            
             original_call = self._method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
