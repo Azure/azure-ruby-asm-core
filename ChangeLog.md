@@ -1,3 +1,7 @@
+# 2017.11.10 - azure-core gem @version 0.1.13
+* Added the call options in the retry data.
+* Added the support for retrying a request with a different URL.
+
 # 2017.08.31 - azure-core gem @version 0.1.12
 * Changed default value of header `MaxDataServiceVersion` to `3.0;NetFx` now that the service is available.
 * `Azure::Core::Http::HTTPError` now can also parse JSON format response body for error type and description.
