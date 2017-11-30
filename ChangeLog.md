@@ -1,3 +1,6 @@
+# 2017.12.01 - azure-core gem @version 0.1.14
+* Added `reason_phrase` as an alternative for HTTP error description if no error details is found in response body 
+
 # 2017.11.10 - azure-core gem @version 0.1.13
 * Added the call options in the retry data.
 * Added the support for retrying a request with a different URL.
