@@ -72,6 +72,8 @@ module Azure
           @uri = http_response.uri
           @status_code = http_response.status_code
           parse_response
+          # Use reason phrase as the description if description is empty
+          @description = http_response.reason_phrase if (@description.nil? || @description.empty?) && http_response.reason_phrase
           super("#{type} (#{status_code}): #{description}")
         end
 
