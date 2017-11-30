@@ -98,4 +98,16 @@ describe Azure::Core::Http::HTTPError do
       subject.description.must_include 'Error Description'
     end
   end
+
+  describe 'with no response body' do
+    let :http_response do
+      body = ''
+      stub(body: body, status_code: 404, uri: 'http://dummy.uri', headers: {}, reason_phrase: 'dummy reason')
+    end
+
+    it 'message has value assigned from reason_phrase' do
+      subject.status_code.must_equal 404
+      subject.message.must_equal 'Unknown (404): dummy reason'
+    end
+  end
 end

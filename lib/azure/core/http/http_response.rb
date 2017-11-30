@@ -19,7 +19,6 @@ module Azure
     module Http
       # A small proxy to clean up the API of Net::HTTPResponse.
       class HttpResponse
-
         # Public: Initialize a new response.
         #
         # http_response - A Net::HTTPResponse.
@@ -42,6 +41,13 @@ module Azure
         # Returns a Fixnum.
         def status_code
           @http_response.status
+        end
+
+        # Public: Get the response reason phrase.
+        #
+        # Returns a String.
+        def reason_phrase
+          @http_response.reason_phrase
         end
 
         # Public: Check if this response was successful. A request is considered
