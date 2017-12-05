@@ -47,8 +47,8 @@ module Azure
             @retry_data[:error] = $!
           end while should_retry?(response, @retry_data)
           # Assign the error when HTTP error is not thrown from the previous filter
-          @retry_data[:error] = response.error if response && !response.success?
-          if @retry_data.has_key?(:error)
+          if response && !response.success?
+            @retry_data[:error] = response.error
             raise @retry_data[:error]
           else
             response
