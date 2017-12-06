@@ -42,16 +42,19 @@ module Azure
             unless @retry_data[:uri].nil?
               req.uri = @retry_data[:uri]
             end
+
+            @retry_data[:error] = nil
             response = _next.call
           rescue
             @retry_data[:error] = $!
           end while should_retry?(response, @retry_data)
+          
           # Assign the error when HTTP error is not thrown from the previous filter
-          if response && !response.success?
-            @retry_data[:error] = response.error
-            raise @retry_data[:error]
-          else
+          @retry_data[:error] = response.error if response && !response.success?
+          if @retry_data[:error].nil?
             response
+          else
+            raise @retry_data[:error]
           end
         end
 
