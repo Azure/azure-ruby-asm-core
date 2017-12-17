@@ -24,7 +24,6 @@ module Azure
 
         def initialize(&block)
           @block = block
-          @retry_data = {}
         end
 
         attr_accessor :retry_data
@@ -37,24 +36,25 @@ module Azure
         # _next - HttpFilter. The next filter in the pipeline
         def call(req, _next)
           response = nil
+          retry_data = {}
           begin
             # URI could change in the retry, e.g. secondary endpoint
-            unless @retry_data[:uri].nil?
-              req.uri = @retry_data[:uri]
+            unless retry_data[:uri].nil?
+              req.uri = retry_data[:uri]
             end
 
-            @retry_data[:error] = nil
+            retry_data[:error] = nil
             response = _next.call
           rescue
-            @retry_data[:error] = $!
-          end while should_retry?(response, @retry_data)
+            retry_data[:error] = $!
+          end while should_retry?(response, retry_data)
           
           # Assign the error when HTTP error is not thrown from the previous filter
-          @retry_data[:error] = response.error if response && !response.success?
-          if @retry_data[:error].nil?
+          retry_data[:error] = response.error if response && !response.success?
+          if retry_data[:error].nil?
             response
           else
-            raise @retry_data[:error]
+            raise retry_data[:error]
           end
         end
 
