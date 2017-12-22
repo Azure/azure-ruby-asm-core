@@ -24,6 +24,7 @@ module Azure
 
         def initialize(&block)
           @block = block
+          @retry_data = {}
         end
 
         attr_accessor :retry_data
@@ -36,7 +37,7 @@ module Azure
         # _next - HttpFilter. The next filter in the pipeline
         def call(req, _next)
           response = nil
-          retry_data = {}
+          retry_data = @retry_data.dup
           begin
             # URI could change in the retry, e.g. secondary endpoint
             unless retry_data[:uri].nil?
