@@ -23,8 +23,9 @@ module Azure
       class RetryPolicy < HttpFilter
 
         def initialize(options = {}, &block)
-          @retry_exceptions = options[:retry_exceptions] || [::StandardError]
-          @retry_exceptions = [@retry_exceptions] unless @retry_exceptions.is_a?(Array)
+          @retry_exceptions = Array(options[:retry_exceptions])
+          @retry_exceptions.select! { |e| e.ancestors.include?(::Exception) }
+          @retry_exceptions << ::StandardError unless @retry_exceptions.include?(::StandardError)
           @block = block
           @retry_data = {}
         end
