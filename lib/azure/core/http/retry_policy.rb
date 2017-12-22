@@ -22,7 +22,10 @@ module Azure
       # specific policy when HTTP layer errors occur
       class RetryPolicy < HttpFilter
 
-        def initialize(&block)
+        def initialize(options = {}, &block)
+          @retry_exceptions = Array(options[:retry_exceptions])
+          @retry_exceptions.select! { |e| e.ancestors.include?(::Exception) }
+          @retry_exceptions << ::StandardError unless @retry_exceptions.include?(::StandardError)
           @block = block
           @retry_data = {}
         end
@@ -45,7 +48,7 @@ module Azure
 
             @retry_data[:error] = nil
             response = _next.call
-          rescue
+          rescue *@retry_exceptions
             @retry_data[:error] = $!
           end while should_retry?(response, @retry_data)
           
