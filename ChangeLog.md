@@ -1,6 +1,7 @@
-# 2017.12.14 - azure-core gem @version 0.1.14
+# 2017.12.28 - azure-core gem @version 0.1.14
 * Added `reason_phrase` as an alternative for HTTP error description if no error details is found in response body 
-* Fixed a bug of re-throwing previously stored response error when it retries.
+* Fixed a bug of re-throwing previously stored response error when it retries. [#51](https://github.com/Azure/azure-ruby-asm-core/issues/51)
+* Fixed a bug that retries exceed the limit after many requests fail. [#57](https://github.com/Azure/azure-ruby-asm-core/issues/57)
 
 # 2017.11.10 - azure-core gem @version 0.1.13
 * Added the call options in the retry data.
