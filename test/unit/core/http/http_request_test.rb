@@ -81,6 +81,28 @@ describe Azure::Core::Http::HttpRequest do
       end
     end
 
+    describe 'of type Tempfile' do
+      subject do
+        tempfile = Tempfile.open('azure')
+        file = File.open(File.expand_path('../../../../fixtures/files/test.png', __FILE__))
+        IO.copy_stream(file, tempfile)
+
+        Azure::Core::Http::HttpRequest.new(:post, uri, body: tempfile)
+      end
+
+      it 'sets the default Content-Type header' do
+        subject.headers['Content-Type'].must_equal 'application/atom+xml; charset=utf-8'
+      end
+
+      it 'sets the Content-Length header' do
+        subject.headers['Content-Length'].must_equal '4054'
+      end
+
+      it 'sets the Content-MD5 header to a Base64 encoded representation of the MD5 hash of the body' do
+        subject.headers['Content-MD5'].must_equal 'nxTCAVCgA9fOTeV8KY8Pug=='
+      end
+    end
+
     describe ' of type StringIO' do
       subject do
         Azure::Core::Http::HttpRequest.new(:post, uri, body: StringIO.new('<body/>'))

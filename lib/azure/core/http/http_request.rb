@@ -47,7 +47,7 @@ module Azure
         # Azure client which contains configuration context and http agents
         # @return [Azure::Client]
         attr_accessor :client
-        
+
         # The http filter
         attr_accessor :has_retry_filter
 
@@ -102,7 +102,7 @@ module Azure
             is_retry_policy = filter.is_a?(Azure::Core::Http::RetryPolicy)
             filter.retry_data[:request_options] = options if is_retry_policy
             @has_retry_filter ||= is_retry_policy
-            
+
             original_call = self._method(:call)
 
             # support 1.8.7 (define_singleton_method doesn't exist until 1.9.1)
@@ -159,7 +159,7 @@ module Azure
         def apply_body_headers
           return headers['Content-Length'] = '0' unless body
 
-          return apply_io_headers        if IO === body
+          return apply_io_headers        if IO === body || Tempfile === body
           return apply_string_io_headers if StringIO === body
           return apply_miscellaneous_headers
         end
