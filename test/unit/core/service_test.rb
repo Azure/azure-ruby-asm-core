@@ -52,7 +52,7 @@ describe 'Azure core service' do
   end
 
   it 'generate_uri should not include any query parameters' do
-    subject.generate_uri('', nil).query.must_equal nil
+    subject.generate_uri('', nil).query.must_be_nil
   end
 
   it 'generate_uri should not re-encode path with spaces' do
