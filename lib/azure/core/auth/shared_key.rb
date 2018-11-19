@@ -96,8 +96,7 @@ module Azure
           headers = headers.map { |k,v| [k.to_s.downcase, v] }
           headers.select! { |k,_| k =~ /^x-ms-/ }
           headers.sort_by! { |(k,_)| k }
-          headers.map! { |k,v| '%s:%s' % [k, v] }
-          headers.map! { |h| h.gsub(/\s+/, ' ') }.join("\n")
+          headers.map! { |k,v| '%s:%s' % [k, v] }.join("\n")
         end
 
         # Calculate the Canonicalized Resource string for a request.
