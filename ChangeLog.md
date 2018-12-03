@@ -1,3 +1,6 @@
+# 2018.11.20 - azure-core gem @version 0.1.15
+* Fixed the issue that consecutive spaces in the headers are replaced by one space. [Storage #127](https://github.com/Azure/azure-storage-ruby/issues/127)
+
 # 2017.12.28 - azure-core gem @version 0.1.14
 * Added `reason_phrase` as an alternative for HTTP error description if no error details is found in response body 
 * Fixed a bug of re-throwing previously stored response error when it retries. [#51](https://github.com/Azure/azure-ruby-asm-core/issues/51)
