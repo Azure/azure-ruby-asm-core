@@ -72,6 +72,19 @@ module Azure
 
           self.headers = default_headers(options[:current_time] || Time.now.httpdate).merge(options[:headers] || {})
           self.body = options[:body]
+          message = [
+              "\n\n\n",
+              'OBJECT_ID:',
+              object_id,
+              "\n\n",
+              'OPTIONS:',
+              options,
+              "\n\n",
+              'HEADERS:',
+              self.headers,
+              "\n\n\n"
+            ].join(' ')
+            ::Logger.new('log/azure_core_info.log').info(message)
         end
 
         # Public: Applies a HttpFilter to the HTTP Pipeline
@@ -150,7 +163,34 @@ module Azure
 
           response = HttpResponse.new(res)
           response.uri = uri
-          raise response.error if !response.success? && !@has_retry_filter
+          # raise response.error if !response.success? && !@has_retry_filter
+          if !response.success? && !@has_retry_filter
+            message = [
+              "\n\n\n",
+              'OBJECT_ID:',
+              object_id,
+              "\n\n",
+              'ERROR:',
+              response.error,
+              "\n\n",
+              'RESPONSE:',
+              response.inspect,
+              "\n\n\n"
+            ].join(' ')
+            ::Logger.new('log/azure_core_failure.log').info(message)
+            raise response.error
+          else
+            message = [
+              "\n\n\n",
+              'OBJECT_ID:',
+              object_id,
+              "\n\n",
+              'RESPONSE:',
+              response.inspect,
+              "\n\n\n"
+            ].join(' ')
+            ::Logger.new('log/azure_core_success.log').info(message)
+          end
           response
         end
 
