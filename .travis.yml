@@ -1,10 +1,12 @@
 sudo: false
 language: ruby
 rvm:
-- 2.0.0
-- 2.1.5
-- 2.2.0
-- 2.3.0
+  - 2.0.0
+  - 2.1.10
+  - 2.2.9
+  - 2.3.6
+  - 2.4.3
+  - 2.5.0
 before_install: gem install bundler -v 1.14.1
 script:
 - bundle install && bundle exec rake test:unit
@@ -15,5 +17,5 @@ deploy:
   gem: azure-core
   on:
     tags: true
-    condition: "$TRAVIS_RUBY_VERSION == 2.3.0"
+    condition: "$TRAVIS_RUBY_VERSION == 2.5.0"
     repo: Azure/azure-ruby-asm-core
