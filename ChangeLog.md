@@ -1,3 +1,6 @@
+# 2019.10.01 - azure-core gem @version 0.1.16
+* Fixed the issue that blocks using gem with rails 6. [#67](https://github.com/Azure/azure-ruby-asm-core/issues/67)
+
 # 2018.11.20 - azure-core gem @version 0.1.15
 * Fixed the issue that consecutive spaces in the headers are replaced by one space. [Storage #127](https://github.com/Azure/azure-storage-ruby/issues/127)
 
