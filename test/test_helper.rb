@@ -16,7 +16,7 @@ require 'dotenv'
 Dotenv.load
 
 require 'minitest/autorun'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require 'minitest/reporters'
 # Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require 'timecop'
