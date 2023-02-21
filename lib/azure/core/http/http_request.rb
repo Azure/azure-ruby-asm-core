@@ -185,8 +185,8 @@ module Azure
         end
 
         def apply_miscellaneous_headers
-          headers['Content-Length'] = body.bytesize.to_s
-          headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body)) unless headers['Content-MD5']
+          headers['Content-Length'] = body.size.to_s
+          headers['Content-MD5'] = Base64.strict_encode64(Digest::MD5.digest(body.to_s)) unless headers['Content-MD5']
         end
       end
     end
