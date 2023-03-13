@@ -29,16 +29,15 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 1.9.3'
 
-  s.add_runtime_dependency('faraday',                 '~> 0.9')
-  s.add_runtime_dependency('faraday_middleware',      '~> 0.10')
+  s.add_runtime_dependency('faraday',                 '~> 1.0')
+  s.add_runtime_dependency('faraday_middleware',      '~> 1.1')
   s.add_runtime_dependency('nokogiri',                '~> 1.6')
 
   s.add_development_dependency('dotenv',              '~> 2.0')
   s.add_development_dependency('minitest',            '~> 5')
   s.add_development_dependency('minitest-reporters',  '~> 1')
   s.add_development_dependency('mocha',               '~> 1.0')
-  s.add_development_dependency('rake',                '~> 10.0')
+  s.add_development_dependency('rake')
   s.add_development_dependency('timecop',             '~> 0.7')
-  s.add_development_dependency('bundler',             '~> 1.11')
-
+  s.add_development_dependency('bundler')
 end
