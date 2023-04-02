@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -22,11 +24,10 @@ Gem::PackageTask.new(gem_spec) do |pkg|
 end
 
 namespace :test do
-
   Rake::TestTask.new :unit do |t|
     t.pattern = 'test/unit/**/*_test.rb'
     t.verbose = true
-    t.libs = %w(lib test)
+    t.libs = %w[lib test]
   end
 
   namespace :unit do
@@ -34,15 +35,14 @@ namespace :test do
       Rake::TestTask.new component do |t|
         t.pattern = "test/unit/#{component}/**/*_test.rb"
         t.verbose = true
-        t.libs = %w(lib test)
+        t.libs = %w[lib test]
       end
     end
 
     component_task :core
   end
-
 end
 
-task :test => %w(test:unit)
+task test: %w[test:unit]
 
-task :default => :test
+task default: :test

@@ -31,8 +31,7 @@ module Azure
           if access_key.nil?
             raise ArgumentError, 'Signing key must be provided'
           end
-
-          @access_key = Base64.strict_decode64(access_key)
+          @access_key = Base64.decode64(access_key)
         end
 
         # Generate an HMAC signature.

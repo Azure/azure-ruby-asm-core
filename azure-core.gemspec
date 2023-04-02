@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #-------------------------------------------------------------------------
 # # Copyright (c) Microsoft and contributors. All rights reserved.
 #
@@ -14,7 +16,7 @@
 #--------------------------------------------------------------------------
 require 'date'
 
-require File.expand_path('../lib/azure/core/version', __FILE__)
+require File.expand_path('lib/azure/core/version', __dir__)
 
 Gem::Specification.new do |s|
   s.name    = 'azure-core'
@@ -25,7 +27,7 @@ Gem::Specification.new do |s|
   s.summary     = 'Core library to be consumed by Ruby SDK gems'
   s.homepage    = 'http://github.com/Azure/azure-ruby-asm-core'
   s.license     = 'Apache License, Version 2.0'
-  s.files       = `git ls-files`.split("\n").reject { |f|  f.start_with?("test/unit") }
+  s.files       = `git ls-files`.split("\n").reject { |f| f.start_with?('test/unit') }
 
   s.required_ruby_version = '>= 1.9.3'
 
@@ -33,12 +35,11 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('faraday_middleware',      '~> 0.10')
   s.add_runtime_dependency('nokogiri',                '~> 1.6')
 
+  s.add_development_dependency('bundler',             '~> 1.11')
   s.add_development_dependency('dotenv',              '~> 2.0')
   s.add_development_dependency('minitest',            '~> 5')
   s.add_development_dependency('minitest-reporters',  '~> 1')
   s.add_development_dependency('mocha',               '~> 1.0')
   s.add_development_dependency('rake',                '~> 10.0')
   s.add_development_dependency('timecop',             '~> 0.7')
-  s.add_development_dependency('bundler',             '~> 1.11')
-
 end
